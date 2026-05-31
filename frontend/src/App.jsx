@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 
-// Backend (CORS is open on the FastAPI side). Override with VITE_API_BASE if needed.
-const API = import.meta.env.VITE_API_BASE || "http://localhost:8000";
+// Backend base URL. Set VITE_API_URL at build time for production deployments;
+// falls back to the local dev backend (CORS is open on the FastAPI side).
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const PIPELINE_STEPS = [
   "Collecting sources via Bright Data…",
@@ -81,7 +82,7 @@ export default function App() {
     );
     const started = Date.now();
     try {
-      const res = await fetch(`${API}/investigate`, {
+      const res = await fetch(`${API_URL}/investigate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ company_name: company.trim() }),
@@ -168,7 +169,7 @@ export default function App() {
       if (report.solana_tx?.tx_signature) {
         payload.solana_tx_signature = report.solana_tx.tx_signature;
       }
-      const res = await fetch(`${API}/verify`, {
+      const res = await fetch(`${API_URL}/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -199,7 +200,7 @@ export default function App() {
     setQuerying(true);
     setQueryResults(null);
     try {
-      const res = await fetch(`${API}/query`, {
+      const res = await fetch(`${API_URL}/query`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: text }),
