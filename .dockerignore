@@ -1,0 +1,38 @@
+# ── Secrets (inject at runtime via --env-file, never bake into the image) ──
+.env
+.env.*
+
+# ── Python ────────────────────────────────────────────────
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── Frontend (not part of the backend image) ──────────────
+frontend/
+
+# ── Local data / build artifacts ──────────────────────────
+.cognee/
+.cognee_system/
+*.lance/
+*.sqlite
+*.db
+dist/
+*.log
+report.json
+
+# ── Git / editor / OS ─────────────────────────────────────
+.git/
+.gitignore
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ── Docs ──────────────────────────────────────────────────
+README.md
+docs/
